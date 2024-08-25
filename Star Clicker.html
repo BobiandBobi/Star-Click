@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rastgele Fotoğraf</title>
+    <style>
+        body {
+            background-image: url('https://cdn.discordapp.com/attachments/1090273784751210506/1265344145774346329/image.png?ex=66bcda91&is=66bb8911&hm=2df04cb48a41ed5195cd013d45da601db72a4c1c27f18d8ad238d1ff3f9f8456&');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+        #foto {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            top: 50px;
+            left: 50px;
+        }
+        #sayac {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            color: white;
+        }
+        #footer {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 14px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="sayac">Yıldız Puanı: 0</div>
+    <img id="foto" src="https://cdn.discordapp.com/attachments/1089593886416060476/1272953485435994142/Baslksz1206_20240721005724.png?ex=66bcd9d1&is=66bb8851&hm=0e5defe556615ec039525fd1128db44b0c93302e7e2dfb6bc217e6850770a112&" alt="Rastgele Fotoğraf">
+    <audio id="ses" src="https://www.myinstants.com/media/sounds/mario-coin-sound.mp3"></audio>
+    <audio id="arkaplanMuzik" src="https://cdn.discordapp.com/attachments/1090273784751210506/1272985444585443523/Stardust.mp3?ex=66bcf794&is=66bba614&hm=7fd8a8fbb40fed685efdd6c52813bd82e228d3d09d41f451febe0d6ea38a30d1&" loop></audio>
+    <div id="footer">Website @bob0is0mad isimli discord kullanıcısı tarafından yapılmıştır!</div>
+
+    <script>
+        let tiklamaSayisi = 0;
+        const foto = document.getElementById('foto');
+        const sayac = document.getElementById('sayac');
+        const ses = document.getElementById('ses');
+        const arkaplanMuzik = document.getElementById('arkaplanMuzik');
+
+        // Arka plan müziğini başlat
+        arkaplanMuzik.play();
+
+        foto.addEventListener('click', (event) => {
+            event.preventDefault(); // Linkin hemen açılmasını engeller
+            tiklamaSayisi++;
+            sayac.textContent = `Yıldız Puanı: ${tiklamaSayisi}`;
+
+            const maxWidth = window.innerWidth - foto.offsetWidth;
+            const maxHeight = window.innerHeight - foto.offsetHeight;
+
+            const randomX = Math.floor(Math.random() * maxWidth);
+            const randomY = Math.floor(Math.random() * maxHeight);
+
+            foto.style.left = `${randomX}px`;
+            foto.style.top = `${randomY}px`;
+
+            ses.play(); // Ses çal
+
+            if (Math.random() < 0.2) { // Oranı %20'ye düşürdüm
+                const originalSrc = foto.src;
+                foto.src = 'https://cdn.discordapp.com/attachments/1090273784751210506/1268235334525648906/Baslksz1258_20240731185227.png?ex=66bcd332&is=66bb81b2&hm=251727ba892f5fd5e8785cfb4c84e13c41dbb5f5d7f90d41f99a46e4f223c6a8&';
+                foto.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    tiklamaSayisi += 3;
+                    sayac.textContent = `Yıldız Puanı: ${tiklamaSayisi}`;
+                    foto.src = originalSrc;
+                }, { once: true });
+            }
+        });
+
+        // Arka plan müziği bittiğinde yeniden başlat
+        arkaplanMuzik.addEventListener('ended', () => {
+            arkaplanMuzik.play();
+        });
+    </script>
+</body>
+</html>
